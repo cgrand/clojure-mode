@@ -93,6 +93,11 @@
   "Face used to font-lock Clojure keywords (:something)."
   :package-version '(clojure-mode . "3.0.0"))
 
+(defface clojure-interop-member-face
+  '((t (:inherit clojure-keyword-face)))
+  "Face used to font-lock Clojure interop members (.something or .-something)."
+  :package-version '(clojure-mode . "3.0.0"))
+
 (defface clojure-character-face
   '((t (:inherit font-lock-string-face)))
   "Face used to font-lock Clojure character literals."
@@ -1019,6 +1024,9 @@ any number of matches of `clojure--sym-forbidden-rest-chars'."))
       ;; Dynamic variables - *something* or @*something*
       (,(concat "\\(?:\\<\\|/\\)@?\\(\\*" clojure--sym-regexp "\\*\\)\\>")
        1 font-lock-variable-name-face)
+      ;; interop members - .something or .-something
+      (,(concat "\\(?:\\<\\)@?\\(\\." clojure--sym-regexp "\\)\\>")
+       1 clojure-interop-member-face)
       ;; Global constants - nil, true, false
       (,(concat
          "\\<"
